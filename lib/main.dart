@@ -1,6 +1,8 @@
 import 'package:app_project_files/screens/home.dart';
 import 'package:flutter/material.dart';
 
+import 'constants/app_colors.dart';
+
 void main()=>runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -8,9 +10,10 @@ class Quizzler extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(scaffoldBackgroundColor: MyColors.black),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
