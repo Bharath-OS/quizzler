@@ -24,7 +24,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               Expanded(flex: 4, child: Center(child: Text("Q1: White is white",style: TextStyles.questionTextStyle,),)),
               Expanded(
                 flex: 2,
-                child: Container(
+                child: SizedBox(
                   child: Column(
                     spacing: 20,
                     mainAxisAlignment: MainAxisAlignment.center,
