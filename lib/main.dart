@@ -12,13 +12,10 @@ class Quizzler extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<QuestionProvider>(
-      create: (context) => QuestionProvider(),
-      child: MaterialApp(
-        theme: ThemeData(scaffoldBackgroundColor: MyColors.black),
-        debugShowCheckedModeBanner: false,
-        home: const HomeScreen(),
-      ),
+    return MaterialApp(
+      theme: ThemeData(scaffoldBackgroundColor: MyColors.black),
+      debugShowCheckedModeBanner: false,
+      home: const HomeScreen(),
     );
   }
 }

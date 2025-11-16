@@ -1,6 +1,8 @@
+import 'package:app_project_files/constants/app_colors.dart';
 import 'package:app_project_files/database/models/question_model.dart';
 import 'package:app_project_files/database/questions.dart';
 import 'package:app_project_files/provider/question_provider.dart';
+import 'package:app_project_files/screens/score_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,13 +18,17 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
-  late int currentQuestion = context.watch<QuestionProvider>().currentQuestion;
+  late int currentQuestion;
+  late int score;
+  late List<Icon> icons;
 
-  void checkAnswer(AnswerOption answer) {
-    context.read<QuestionProvider>().addSymbol(
-      answer,
-      quizQuestions[currentQuestion].answer,
-    );
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    currentQuestion = 0;
+    score = 0;
+    icons = [];
   }
 
   @override
@@ -37,11 +43,9 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               Expanded(
                 flex: 4,
                 child: Center(
-                  child: Consumer<QuestionProvider>(
-                    builder: (context, controller, child) => Text(
-                      quizQuestions[controller.currentQuestion].question,
-                      style: TextStyles.questionTextStyle,
-                    ),
+                  child: Text(
+                    "Q${currentQuestion+1} : ${quizQuestions[currentQuestion].question}",
+                    style: TextStyles.questionTextStyle,
                   ),
                 ),
               ),
@@ -53,25 +57,38 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     MyButtons.trueButton(
-                      checkAnswer(AnswerOption.trueOption),
+                      () => checkAnswer(AnswerOption.trueOption),
                     ),
                     MyButtons.falseButton(
-                      checkAnswer(AnswerOption.falseOption),
+                      () => checkAnswer(AnswerOption.falseOption),
                     ),
                   ],
                 ),
               ),
-              Consumer<QuestionProvider>(
-                builder: (context, question, child) {
-                  return Wrap(
-                    children: context.read<QuestionProvider>().symbols,
-                  );
-                },
-              ),
+              Wrap(children: icons),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void checkAnswer(AnswerOption answer) {
+    if (currentQuestion < quizQuestions.length-1) {
+      if (answer == quizQuestions[currentQuestion].answer) {
+        score++;
+        icons.insert(currentQuestion, Symbols.correct);
+      } else {
+        icons.insert(currentQuestion, Symbols.inCorrect);
+      }
+      setState(() {
+        currentQuestion++;
+      });
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ScoreScreen(score: score)),
+      );
+    }
   }
 }
