@@ -30,9 +30,9 @@ class MyButtons {
     );
   }
 
-  static ElevatedButton trueButton() {
+  static ElevatedButton trueButton(void method) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () => method,
       style: ElevatedButton.styleFrom(
         backgroundColor: MyColors.successColor,
         foregroundColor: MyColors.black,
@@ -53,9 +53,9 @@ class MyButtons {
     );
   }
 
-  static ElevatedButton falseButton() {
+  static ElevatedButton falseButton(void method) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () => method,
       style: ElevatedButton.styleFrom(
         backgroundColor: MyColors.errorColor,
         foregroundColor: MyColors.white,
